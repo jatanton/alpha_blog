@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
   
-  has_many :articles
+  # dependent: :destroy ensures that if we delete a user, all his articles get
+  # deleted as well.
+  has_many :articles, dependent: :destroy
+  
   # before saving to db bs will convert all email to downcase
   before_save { self.email = email.downcase }
   validates :username, presence: true, 
